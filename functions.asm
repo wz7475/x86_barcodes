@@ -27,6 +27,9 @@ set_pixel:
     mov word [ebx], 0
     mov byte [ebx+2], 0
 
+    mov word [ebx + ecx -3], 0
+    mov byte [ebx + ecx + 2-3], 0
+
     mov eax, ecx
     imul ecx, 9
 loop:
