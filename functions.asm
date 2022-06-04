@@ -15,19 +15,29 @@ set_pixel:
 
     imul ebx, 3
     add ebx, 3
-    and ebx, 0xFFFFFFFC ; (width * 3 + 3)~ -3
-    imul ebx, ecx ; y_pos *= height
+    and ebx, 0xFFFFFFFC ; line_bytes = (width * 3 + 3)~ -3
+    imul ebx, ecx ; pos = line_bytes * height
 
     mov edx, [ebp +12] ; copy x
-    imul edx, 3 ; 3 bits per pixe;
-    add ebx, edx ; relative address
-    add ebx, eax ; make address absolute
+    imul edx, 3 ; 3 bytes per pixel;
+    add ebx, edx ; relative address (pos)
+    add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
     mov edx, [ebp+20] ; copy color 00RRGGBB
     mov [ebx], dx ; copy to ebx GGBB (little endian so we start with B)
     shr edx, 16
     mov [ebx+2], dl
+
+    mov edx, [ebp+20]
+    mov [ebx+3], dx ; copy to ebx GGBB (little endian so we start with B)
+    shr edx, 16
+    mov [ebx+5], dl
+
+    mov edx, [ebp+20]
+    mov [ebx+6], dx ; copy to ebx GGBB (little endian so we start with B)
+    shr edx, 16
+    mov [ebx+8], dl
 
     mov eax, [ebp+20] ; return value
     pop edx
