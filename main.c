@@ -47,11 +47,11 @@ void init_bmp_header(BmpHeader *header){
     header->pixel_offset = BMP_PIXEL_OFFSET;
     header->header_size = BMP_DIB_HEADER;
     header->planes = BMP_PLANES;
-    header->bpp_type = BMP_BPP;
+    header->bpp_type = BMP_BPP; // 24 bit map
     header->compression = 0;
     header->image_size = 0;
-    header->horizontal_res= 500;
-    header->vertical_res = 0;
+    header->horizontal_res= BMP_HORIZONTAL_RES;
+    header->vertical_res = BMP_VERTICAL_RES;
     header->important_colors = 0;
 }
 
@@ -68,7 +68,7 @@ void write_bytes_to_bmp(unsigned char *buffer, size_t size){
 }
 
 unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, size_t *output_size){
-    unsigned int row_size = (width* 3) & ~3;
+    unsigned int row_size = (width  * 3 + 3) & ~3; // round up to dividable by 4
     *output_size = row_size * height + BMP_HEADER_SIZE;
     unsigned char *bitmap = (unsigned char *) malloc(*output_size);
 
@@ -78,14 +78,17 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
     header.width = width;
     header.height = height;
 
-    memcpy(bitmap, &header, BMP_HEADER_SIZE);
-    for (int i = BMP_HEADER_SIZE; i < *output_size; ++i){
+    memcpy(bitmap, &header, BMP_HEADER_SIZE); // copy header to newly allocated memory
+    for (int i = BMP_HEADER_SIZE; i < *output_size; ++i){ // paint white
         bitmap[i] = 0xff;
     }
     return bitmap;
 }
 
 extern int remove_repeat(char *a);
+
+extern int set_pixel(unsigned char *dest_bitmap, unsigned int x, unsigned int y, unsigned int color);
+//extern unsigned int get_pixel(unsigned char *src_bitmap, unsigned  int x, unsigned int y);
 
 int main(void)
 {
@@ -105,7 +108,9 @@ int main(void)
     // printf("%d\n", buffer);
 
     size_t bmp_size = 0;
-    unsigned char *bmp_buffer = generate_empty_bitmap(120, 50, &bmp_size);
+    unsigned char *bmp_buffer = generate_empty_bitmap(12, 10, &bmp_size);
+
+    set_pixel(bmp_buffer, 5, 5, 0x00000000);
 
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);

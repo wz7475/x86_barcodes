@@ -16,5 +16,6 @@ link: compile
 clean:
 	rm *.o
 	rm program
+	rm output.bmp
 	rm $(ASM_SRC).lst
 
