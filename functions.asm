@@ -6,42 +6,67 @@ set_pixel:
     push ebp
     mov ebp, esp
     push ebx
-    push ecx
-    push edx
+;    push ecx
+;    push edx
 
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
-    mov ebx, [eax+18] ; copy img  width
-    mov ecx, [ebp+16]  ; copy img height
+    mov ecx, [eax+18] ; get img width
 
-    imul ebx, 3
-    add ebx, 3
-    and ebx, 0xFFFFFFFC ; line_bytes = (width * 3 + 3)~ -3
-    imul ebx, ecx ; pos = line_bytes * height
+    imul ecx, 3
+    add ecx, 3
+    and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-    mov edx, [ebp +12] ; copy x
-    imul edx, 3 ; 3 bytes per pixel;
-    add ebx, edx ; relative address (pos)
+    mov ebx, [ebp +12] ; copy x
+    imul ebx, 3 ; 3 bytes per pixel ebx - x
+
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
-    mov edx, [ebp+20] ; copy color 00RRGGBB
-    mov [ebx], dx ; copy to ebx GGBB (little endian so we start with B)
-    shr edx, 16
-    mov [ebx+2], dl
+; first column
+    ; first pixel
+    mov word [ebx], 0
+    mov byte [ebx+2], 0
 
-    mov edx, [ebp+20]
-    mov [ebx+3], dx ; copy to ebx GGBB (little endian so we start with B)
-    shr edx, 16
-    mov [ebx+5], dl
+    mov eax, ecx
+    imul ecx, 9
+loop:
+    ; second pixel
+    mov word [ebx + ecx], 0
+    mov byte [ebx + ecx + 2], 0
+    sub ecx, eax
+    cmp ecx, 0
+    jg loop
 
-    mov edx, [ebp+20]
-    mov [ebx+6], dx ; copy to ebx GGBB (little endian so we start with B)
-    shr edx, 16
-    mov [ebx+8], dl
+    mov ecx, eax
+
+; third column
+;     first pixel
+    mov word [ebx+6], 0
+    mov byte [ebx+2+6], 0
+   ; second pixel
+    mov word [ebx + ecx+6], 0
+    mov byte [ebx + ecx + 2+6], 0
+
+
+;
+;    mov word [ebx+3], 0
+;    mov byte [ebx+5], 0
+;
+;    mov word [ebx+6], 0
+;    mov byte [ebx+8], 0
+;    mov edx, [ebp+20]
+;    mov [ebx+3], dx ; copy to ebx GGBB (little endian so we start with B)
+;    shr edx, 16
+;    mov [ebx+5], dl
+;
+;    mov edx, [ebp+20]
+;    mov [ebx+6], dx ; copy to ebx GGBB (little endian so we start with B)
+;    shr edx, 16
+;    mov [ebx+8], dl
 
     mov eax, [ebp+20] ; return value
-    pop edx
-    pop ecx
+;    pop edx
+;    pop ecx
     pop ebx
     pop ebp
     ret

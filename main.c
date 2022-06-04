@@ -110,7 +110,7 @@ int main(void)
     size_t bmp_size = 0;
     unsigned char *bmp_buffer = generate_empty_bitmap(12, 10, &bmp_size);
 
-    set_pixel(bmp_buffer, 5, 5, 0x00000000);
+    set_pixel(bmp_buffer, 0, 0, 0x00000000);
 
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
