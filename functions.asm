@@ -33,25 +33,25 @@ set_pixel:
     mov word [ebx + ecx -3], 0
     mov byte [ebx + ecx + 2-3], 0
 
-    mov edi, ecx ; edi = img_width (loop)
-    mov eax, ecx ; ecx = line bytes
+    mov eax, ecx ; eax = img_width (loop)
+    mov edi, ecx ; edi = line bytes
 width_loop:
-    imul ecx, 9
+    mov ecx, edi ; need to preserve base line bytes
+    imul ecx, 9 ; last pixel in column
     mov  edx, [ebx]
-    and edx, 0x000ffff
-    cmp edx, 0x000ffff
-    je white_pixel
+    and edx, 0x0000ffff
+    cmp edx, 0x0000ffff
+    je white_pixel   ; pixels are black of white => it's sufficient to check just 2 out 3 bytes
 loop:
     mov word [ebx + ecx], 0
     mov byte [ebx + ecx + 2], 0
-    sub ecx, eax
+    sub ecx, edi ; 1px down
     cmp ecx, 0
     jg loop
 white_pixel:
-    mov ecx, eax
     add ebx, 3
-    dec edi
-    cmp edi, 0
+    dec eax
+    cmp eax, 0
     jg width_loop
 
     pop edi
