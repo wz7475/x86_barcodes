@@ -22,16 +22,29 @@ set_pixel:
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
-; first column
-    ; first pixel
+    ; 1st pixel in first row
     mov word [ebx], 0
     mov byte [ebx+2], 0
 
+    ; 3rd pixel in first row
+    mov word [ebx+6], 0
+    mov byte [ebx+2+6], 0
+
+    ; last pixel in first row
     mov word [ebx + ecx -3], 0
     mov byte [ebx + ecx + 2-3], 0
 
+    mov edi, 12
     mov eax, ecx
+width_loop:
+
+
     imul ecx, 9
+
+    mov  edx, [ebx]
+    and edx, 0x000ffff
+    cmp edx, 0x000ffff
+    je white_pixel
 loop:
     ; second pixel
     mov word [ebx + ecx], 0
@@ -40,15 +53,22 @@ loop:
     cmp ecx, 0
     jg loop
 
+
+
+white_pixel:
     mov ecx, eax
+    add ebx, 3
+    dec edi
+    cmp edi, 0
+    jg width_loop
 
 ; third column
-;     first pixel
-    mov word [ebx+6], 0
-    mov byte [ebx+2+6], 0
-   ; second pixel
-    mov word [ebx + ecx+6], 0
-    mov byte [ebx + ecx + 2+6], 0
+;;     first pixel
+;    mov word [ebx+6], 0
+;    mov byte [ebx+2+6], 0
+;   ; second pixel
+;    mov word [ebx + ecx+6], 0
+;    mov byte [ebx + ecx + 2+6], 0
 
 
 ;
