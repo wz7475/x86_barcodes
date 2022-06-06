@@ -1,8 +1,8 @@
 section	.text
 
-global set_pixel
+global replicate_row
 
-set_pixel:
+replicate_row:
     push ebp
     mov ebp, esp
     push ebx
@@ -37,7 +37,7 @@ set_pixel:
     mov edi, ecx ; edi = line bytes
 width_loop:
     mov ecx, edi ; need to preserve base line bytes
-    imul ecx, 9 ; last pixel in column
+    imul ecx, 48 ; last pixel in column
     mov  edx, [ebx]
     and edx, 0x0000ffff
     cmp edx, 0x0000ffff

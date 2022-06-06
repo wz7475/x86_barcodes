@@ -85,32 +85,16 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
     return bitmap;
 }
 
-extern int remove_repeat(char *a);
 
-extern int set_pixel(unsigned char *dest_bitmap, unsigned int x, unsigned int y, unsigned int color);
+extern int replicate_row(unsigned char *dest_bitmap, unsigned int x, unsigned int y, unsigned int color);
 //extern unsigned int get_pixel(unsigned char *src_bitmap, unsigned  int x, unsigned int y);
 
 int main(void)
 {
-    // int buffer;
-    // char text1[]="CCCComputerr Arrrrrchitecturrrre Labbbb";
-    // char text2[]="Computer Architecture Lab";
-
-
-    // printf("Input string      > %s\n", text1);
-    // buffer = remove_repeat(&text1[0]);
-    // printf("Conversion results> %s\n", text1);
-    // printf("%d\n\n", buffer);
-
-    // printf("Input string      > %s\n", text2);
-    // buffer = remove_repeat(&text2[0]);
-    // printf("Conversion results> %s\n", text2);
-    // printf("%d\n", buffer);
-
     size_t bmp_size = 0;
-    unsigned char *bmp_buffer = generate_empty_bitmap(12, 10, &bmp_size);
+    unsigned char *bmp_buffer = generate_empty_bitmap(120, 49, &bmp_size);
 
-    set_pixel(bmp_buffer, 0, 0, 0x00000000);
+    replicate_row(bmp_buffer, 0, 0, 0x00000000);
 
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
