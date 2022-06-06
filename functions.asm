@@ -37,7 +37,7 @@ replicate_row:
     mov edi, ecx ; edi = line bytes
 width_loop:
     mov ecx, edi ; need to preserve base line bytes
-    imul ecx, 48 ; last pixel in column
+    imul ecx, 49 ; last pixel in column
     mov  edx, [ebx]
     and edx, 0x0000ffff
     cmp edx, 0x0000ffff

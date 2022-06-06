@@ -92,7 +92,7 @@ extern int replicate_row(unsigned char *dest_bitmap, unsigned int x, unsigned in
 int main(void)
 {
     size_t bmp_size = 0;
-    unsigned char *bmp_buffer = generate_empty_bitmap(120, 49, &bmp_size);
+    unsigned char *bmp_buffer = generate_empty_bitmap(548, 50, &bmp_size);
 
     replicate_row(bmp_buffer, 0, 0, 0x00000000);
 
