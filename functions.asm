@@ -29,11 +29,16 @@ replicate_row:
     mov word [ebx+6], 0
     mov byte [ebx+2+6], 0
 
-    ; last pixel in first row
-    mov word [ebx + ecx -3], 0
-    mov byte [ebx + ecx + 2-3], 0
+    mov word [ebx+120], 0
+    mov byte [ebx+2+120], 0
 
-    mov eax, ecx ; eax = img_width (loop)
+
+    ; last pixel in first row TODO: error here
+;    mov word [ebx + ecx -3], 0
+;    mov byte [ebx + ecx + 2-3], 0
+
+;    mov eax, ecx ; eax = img_width (loop)
+    mov eax, [eax+18]
     mov edi, ecx ; edi = line bytes
 width_loop:
     mov ecx, edi ; need to preserve base line bytes
