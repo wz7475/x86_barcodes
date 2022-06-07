@@ -86,16 +86,18 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 }
 
 
-extern int replicate_row(unsigned char *dest_bitmap, unsigned int x, unsigned int y, unsigned int color);
+extern int replicate_row(unsigned char *dest_bitmap);
+extern int put_row(unsigned char *dest_bitmap);
 //extern unsigned int get_pixel(unsigned char *src_bitmap, unsigned  int x, unsigned int y);
 
 int main(void)
 {
     size_t bmp_size = 0;
     // 100x50 ok; 50x50 malloc exception
-    unsigned char *bmp_buffer = generate_empty_bitmap(550, 50, &bmp_size);
+    unsigned char *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
 
-    replicate_row(bmp_buffer, 0, 0, 0x00000000);
+    put_row(bmp_buffer);
+    replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
     return 0;

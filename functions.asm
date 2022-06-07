@@ -1,6 +1,6 @@
 section	.text
 
-global replicate_row
+global replicate_row, put_row
 
 replicate_row:
     push ebp
@@ -15,22 +15,23 @@ replicate_row:
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-    mov ebx, [ebp +12] ; copy x
+;    mov ebx, [ebp +12] ; copy x
+    xor ebx, ebx
     imul ebx, 3 ; 3 bytes per pixel ebx - x
 
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
-    ; 1st pixel in first row
-    mov word [ebx], 0
-    mov byte [ebx+2], 0
-
-    ; 3rd pixel in first row
-    mov word [ebx+6], 0
-    mov byte [ebx+2+6], 0
-
-    mov word [ebx+120], 0
-    mov byte [ebx+2+120], 0
+;    ; 1st pixel in first row
+;    mov word [ebx], 0
+;    mov byte [ebx+2], 0
+;
+;    ; 3rd pixel in first row
+;    mov word [ebx+6], 0
+;    mov byte [ebx+2+6], 0
+;
+;    mov word [ebx+120], 0
+;    mov byte [ebx+2+120], 0
 
 
     ; last pixel in first row TODO: error here
@@ -58,6 +59,42 @@ white_pixel:
     dec eax
     cmp eax, 0
     jg width_loop
+
+    pop edi
+    pop ebx
+    pop ebp
+    ret
+
+
+put_row:
+    push ebp
+    mov ebp, esp
+    push ebx
+    push edi
+
+    mov eax, [ebp+8] ; address of bitmap (header + pixel)
+    mov ecx, [eax+18] ; get img width
+
+    imul ecx, 3
+    add ecx, 3
+    and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
+
+   xor ebx, ebx
+   imul ebx, 3 ; 3 bytes per pixel ebx - x
+
+   add ebx, eax ; make address absolute (pos + img_ptr)
+   add ebx, 54 ; add offset (header is always 54)
+
+   ; 1st pixel in first row
+   mov word [ebx], 0
+   mov byte [ebx+2], 0
+
+   ; 3rd pixel in first row
+   mov word [ebx+6], 0
+   mov byte [ebx+2+6], 0
+
+   mov word [ebx+120], 0
+   mov byte [ebx+2+120], 0
 
     pop edi
     pop ebx
