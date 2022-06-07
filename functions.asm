@@ -80,24 +80,48 @@ put_row:
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
+;   eax - address of widths
+;   ebx - address of first pixel
+;   ecx - counter for stripes
+;   edx - offset to stripe
+;   edi - current offset
+;   esi - current stripe width
+
     mov eax, [ebp+12]
-    mov eax, [eax]
-    imul eax, 3
-    ; given pixel in first row
-    mov word [ebx+eax], 0
-    mov byte [ebx+eax+2], 0
 
+    xor edi, edi
+    mov ecx, [ebp+16]
+    mov ecx, 8
+paint_loop:
+    mov edx, [eax]
+    imul edx, 3
+    add edi, edx
 
-    ; 1st pixel in first row
+    mov esi, [eax]
+    dec esi
+inner_loop:
     mov word [ebx], 0
     mov byte [ebx+2], 0
+    dec esi
+    cmp esi, 0
+    jge inner_loop
 
-    ; 3rd pixel in first row
-    mov word [ebx+6], 0
-    mov byte [ebx+2+6], 0
+    add eax, 4
+    add ebx, edx
+    dec ecx
+    cmp ecx, 0
+    jg paint_loop
 
-    mov word [ebx+120], 0
-    mov byte [ebx+2+120], 0
+;    ; 1st pixel in first row
+;    mov word [ebx], 0
+;    mov byte [ebx+2], 0
+;
+;    ; 3rd pixel in first row
+;    mov word [ebx+6], 0
+;    mov byte [ebx+2+6], 0
+;
+;    mov word [ebx+120], 0
+;    mov byte [ebx+2+120], 0
 
     pop edi
     pop ebx
