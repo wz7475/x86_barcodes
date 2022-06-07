@@ -86,7 +86,7 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 }
 
 
-extern int replicate_row(uint8_t *dest_bitmap);
+//extern int replicate_row(uint8_t *dest_bitmap);
 extern int put_row(uint8_t *dest_bitmap, uint16_t *stripes_widths, uint8_t hardcoded_len);
 
 int main(void)
@@ -104,7 +104,7 @@ int main(void)
 
     // TODO: calling helper function form assembly
     put_row(bmp_buffer, stripes, 9);
-    replicate_row(bmp_buffer);
+//    replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
     return 0;

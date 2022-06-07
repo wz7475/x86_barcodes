@@ -1,6 +1,6 @@
 section	.text
 
-global replicate_row, put_row
+global put_row
 
 replicate_row:
     push ebp
@@ -8,7 +8,8 @@ replicate_row:
     push ebx
     push edi
 
-    mov eax, [ebp+8] ; address of bitmap (header + pixel)
+;    eax is set by caller
+;    mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 
     imul ecx, 3
@@ -112,6 +113,10 @@ white_stripe:
     dec ecx
     cmp ecx, 0
     jg paint_loop
+
+debug_label:
+    mov eax, [ebp+8]
+    call replicate_row
 
     pop esi
     pop edi
