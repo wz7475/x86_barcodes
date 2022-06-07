@@ -65,7 +65,7 @@ put_row:
 ;    cmp eax, 0
 ;    jg debug_label
 
-    mov eax, [ebp+16]
+;    mov eax, [ebp+16]
 
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
@@ -74,22 +74,30 @@ put_row:
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-   xor ebx, ebx
-   imul ebx, 3 ; 3 bytes per pixel ebx - x
+    xor ebx, ebx
+    imul ebx, 3 ; 3 bytes per pixel ebx - x
 
-   add ebx, eax ; make address absolute (pos + img_ptr)
-   add ebx, 54 ; add offset (header is always 54)
+    add ebx, eax ; make address absolute (pos + img_ptr)
+    add ebx, 54 ; add offset (header is always 54)
 
-   ; 1st pixel in first row
-   mov word [ebx], 0
-   mov byte [ebx+2], 0
+    mov eax, [ebp+12]
+    mov eax, [eax]
+    imul eax, 3
+    ; given pixel in first row
+    mov word [ebx+eax], 0
+    mov byte [ebx+eax+2], 0
 
-   ; 3rd pixel in first row
-   mov word [ebx+6], 0
-   mov byte [ebx+2+6], 0
 
-   mov word [ebx+120], 0
-   mov byte [ebx+2+120], 0
+    ; 1st pixel in first row
+    mov word [ebx], 0
+    mov byte [ebx+2], 0
+
+    ; 3rd pixel in first row
+    mov word [ebx+6], 0
+    mov byte [ebx+2+6], 0
+
+    mov word [ebx+120], 0
+    mov byte [ebx+2+120], 0
 
     pop edi
     pop ebx

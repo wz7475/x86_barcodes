@@ -99,7 +99,7 @@ int main(void)
     for (int i=0; i<10; i++){
         *(stripes+i*2) = i;
     }
-
+    *stripes = 20;
     printf("%d", (*(stripes+4)));
 
 
