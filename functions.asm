@@ -72,8 +72,11 @@ put_row:
     push ebx
     push edi
 
+; integral promotion each argument is 4 bytes,
+; array of unit_16t -> elements separated  by 4 bytes
     mov eax, [ebp+12]
-    mov eax, [eax+4]
+    mov eax, [eax+12]
+
 
 debug_label:
     dec eax

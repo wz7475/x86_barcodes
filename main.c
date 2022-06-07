@@ -96,12 +96,12 @@ int main(void)
     // 100x50 ok; 50x50 malloc exception
     uint8_t *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
 
-    uint8_t *stripes = (uint8_t *) malloc(100);
+    uint16_t *stripes = (uint16_t *) malloc(100);
     for (int i=0; i<10; i++){
-        *(stripes+i) = i;
+        *(stripes+i*2) = i;
     }
 
-    printf("%d", (*(stripes)));
+    printf("%d", (*(stripes+4)));
 
 //    uint8_t  *some = (uint8_t *) malloc(1);
 //    *some = 9;
