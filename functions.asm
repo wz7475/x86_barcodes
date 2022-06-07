@@ -56,17 +56,12 @@ put_row:
     push ebx
     push edi
     push esi
+;    TODO: is calling convention ok?
 
 ; integral promotion each argument is 4 bytes,
 ; array of unit_16t -> elements separated  by 4 bytes
 ;    mov eax, [ebp+12]
 ;    mov eax, [eax+12]
-;debug_label:
-;    dec eax
-;    cmp eax, 0
-;    jg debug_label
-
-;    mov eax, [ebp+16]
 
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
@@ -117,17 +112,6 @@ white_stripe:
     dec ecx
     cmp ecx, 0
     jg paint_loop
-
-;    ; 1st pixel in first row
-;    mov word [ebx], 0
-;    mov byte [ebx+2], 0
-;
-;    ; 3rd pixel in first row
-;    mov word [ebx+6], 0
-;    mov byte [ebx+2+6], 0
-;
-;    mov word [ebx+120], 0
-;    mov byte [ebx+2+120], 0
 
     pop esi
     pop edi

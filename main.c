@@ -93,17 +93,16 @@ int main(void)
 {
     size_t bmp_size = 0;
     // 100x50 ok; 50x50 malloc exception
-    uint8_t *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
+    uint8_t *bmp_buffer = generate_empty_bitmap(120, 50, &bmp_size);
 
-    uint16_t *stripes = (uint16_t *) malloc(100);
+    uint16_t *stripes = (uint16_t *) malloc(9*4); //TODO: why 2 * 9 doesn't work
     uint16_t hardcoded_widths [9] = {4,4,2,2,1,1,4,4, 4};
-    for (int i=0; i<10; i++){
+    for (int i=0; i<9; i++){
         *(stripes+i*2) = hardcoded_widths[i];
     }
-//    *stripes = 20;
     printf("%d", (*(stripes+4)));
 
-
+    // TODO: calling helper function form assembly
     put_row(bmp_buffer, stripes, 9);
     replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
