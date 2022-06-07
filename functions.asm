@@ -55,6 +55,7 @@ put_row:
     mov ebp, esp
     push ebx
     push edi
+    push esi
 
 ; integral promotion each argument is 4 bytes,
 ; array of unit_16t -> elements separated  by 4 bytes
@@ -84,17 +85,22 @@ put_row:
 ;   ebx - address of first pixel
 ;   ecx - counter for stripes
 ;   edx - offset to stripe
-
+;   edi - negation white/black
 ;   esi - current stripe width
 
     mov eax, [ebp+12]
 
     xor edi, edi
     mov ecx, [ebp+16]
-    mov ecx, 8
+;    mov ecx, 8
+
+    mov edi, 0
 paint_loop:
     mov edx, [eax]
     imul edx, 3
+
+    cmp edi, 0
+    jne white_stripe
 
     mov esi, edx
     sub esi, 3
@@ -104,7 +110,8 @@ inner_loop:
     sub esi, 3
     cmp esi, 0
     jge inner_loop
-
+white_stripe:
+    not edi
     add eax, 4
     add ebx, edx
     dec ecx
@@ -122,6 +129,7 @@ inner_loop:
 ;    mov word [ebx+120], 0
 ;    mov byte [ebx+2+120], 0
 
+    pop esi
     pop edi
     pop ebx
     pop ebp

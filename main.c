@@ -96,7 +96,7 @@ int main(void)
     uint8_t *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
 
     uint16_t *stripes = (uint16_t *) malloc(100);
-    uint16_t hardcoded_widths [8] = {2,2,2,2,2,2,2,2};
+    uint16_t hardcoded_widths [9] = {4,4,2,2,1,1,4,4, 4};
     for (int i=0; i<10; i++){
         *(stripes+i*2) = hardcoded_widths[i];
     }
@@ -104,7 +104,7 @@ int main(void)
     printf("%d", (*(stripes+4)));
 
 
-    put_row(bmp_buffer, stripes, 8);
+    put_row(bmp_buffer, stripes, 9);
     replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
