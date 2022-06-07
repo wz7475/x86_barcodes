@@ -84,7 +84,7 @@ put_row:
 ;   ebx - address of first pixel
 ;   ecx - counter for stripes
 ;   edx - offset to stripe
-;   edi - current offset
+
 ;   esi - current stripe width
 
     mov eax, [ebp+12]
@@ -95,14 +95,13 @@ put_row:
 paint_loop:
     mov edx, [eax]
     imul edx, 3
-    add edi, edx
 
-    mov esi, [eax]
-    dec esi
+    mov esi, edx
+    sub esi, 3
 inner_loop:
-    mov word [ebx], 0
-    mov byte [ebx+2], 0
-    dec esi
+    mov word [ebx+esi], 0
+    mov byte [ebx+esi+2], 0
+    sub esi, 3
     cmp esi, 0
     jge inner_loop
 
