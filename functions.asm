@@ -22,22 +22,6 @@ replicate_row:
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
-;    ; 1st pixel in first row
-;    mov word [ebx], 0
-;    mov byte [ebx+2], 0
-;
-;    ; 3rd pixel in first row
-;    mov word [ebx+6], 0
-;    mov byte [ebx+2+6], 0
-;
-;    mov word [ebx+120], 0
-;    mov byte [ebx+2+120], 0
-
-
-    ; last pixel in first row TODO: error here
-;    mov word [ebx + ecx -3], 0
-;    mov byte [ebx + ecx + 2-3], 0
-
 ;    mov eax, ecx ; eax = img_width (loop)
     mov eax, [eax+18]
     mov edi, ecx ; edi = line bytes
@@ -74,14 +58,12 @@ put_row:
 
 ; integral promotion each argument is 4 bytes,
 ; array of unit_16t -> elements separated  by 4 bytes
-    mov eax, [ebp+12]
-    mov eax, [eax+12]
-
-
-debug_label:
-    dec eax
-    cmp eax, 0
-    jg debug_label
+;    mov eax, [ebp+12]
+;    mov eax, [eax+12]
+;debug_label:
+;    dec eax
+;    cmp eax, 0
+;    jg debug_label
 
     mov eax, [ebp+16]
 

@@ -88,7 +88,6 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 
 extern int replicate_row(uint8_t *dest_bitmap);
 extern int put_row(uint8_t *dest_bitmap, uint8_t *stripes_widths);
-//extern unsigned int get_pixel(unsigned char *src_bitmap, unsigned  int x, unsigned int y);
 
 int main(void)
 {
@@ -103,10 +102,6 @@ int main(void)
 
     printf("%d", (*(stripes+4)));
 
-//    uint8_t  *some = (uint8_t *) malloc(1);
-//    *some = 9;
-//    printf("%d", (*some));
-// 57109700
 
     put_row(bmp_buffer, stripes);
     replicate_row(bmp_buffer);
