@@ -72,6 +72,16 @@ put_row:
     push ebx
     push edi
 
+    mov eax, [ebp+12]
+    mov eax, [eax+4]
+
+debug_label:
+    dec eax
+    cmp eax, 0
+    jg debug_label
+
+    mov eax, [ebp+16]
+
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 

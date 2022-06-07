@@ -20,8 +20,8 @@
 #define BMP_DIB_HEADER 40
 
 typedef struct {
-    unsigned char sig_0;
-    unsigned char sig_1;
+    uint8_t sig_0;
+    uint8_t sig_1;
     uint32_t size;
     uint32_t reserved;
     uint32_t pixel_offset;
@@ -55,7 +55,7 @@ void init_bmp_header(BmpHeader *header){
     header->important_colors = 0;
 }
 
-void write_bytes_to_bmp(unsigned char *buffer, size_t size){
+void write_bytes_to_bmp(uint8_t *buffer, size_t size){
     FILE *file;
 
     file = fopen(OUT_FILE_NAME, "wb");
@@ -70,7 +70,7 @@ void write_bytes_to_bmp(unsigned char *buffer, size_t size){
 unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, size_t *output_size){
     unsigned int row_size = (width  * 3 + 3) & ~3; // round up to dividable by 4
     *output_size = row_size * height + BMP_HEADER_SIZE;
-    unsigned char *bitmap = (unsigned char *) malloc(*output_size);
+    uint8_t *bitmap = (uint8_t *) malloc(*output_size);
 
     BmpHeader header;
     init_bmp_header(&header);
@@ -86,17 +86,29 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 }
 
 
-extern int replicate_row(unsigned char *dest_bitmap);
-extern int put_row(unsigned char *dest_bitmap);
+extern int replicate_row(uint8_t *dest_bitmap);
+extern int put_row(uint8_t *dest_bitmap, uint8_t *stripes_widths);
 //extern unsigned int get_pixel(unsigned char *src_bitmap, unsigned  int x, unsigned int y);
 
 int main(void)
 {
     size_t bmp_size = 0;
     // 100x50 ok; 50x50 malloc exception
-    unsigned char *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
+    uint8_t *bmp_buffer = generate_empty_bitmap(90, 50, &bmp_size);
 
-    put_row(bmp_buffer);
+    uint8_t *stripes = (uint8_t *) malloc(100);
+    for (int i=0; i<10; i++){
+        *(stripes+i) = i;
+    }
+
+    printf("%d", (*(stripes)));
+
+//    uint8_t  *some = (uint8_t *) malloc(1);
+//    *some = 9;
+//    printf("%d", (*some));
+// 57109700
+
+    put_row(bmp_buffer, stripes);
     replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
