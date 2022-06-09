@@ -106,7 +106,7 @@ int main(void)
 //
 //    free(output_width);
 //    print_char_codes(0);
-    print_string_codes();
+    print_string_codes("013401", 6);
 
 //
 //    size_t bmp_size = 0;
