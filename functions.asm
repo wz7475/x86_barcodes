@@ -92,7 +92,8 @@ put_row:
 
     mov edi, 0
 paint_loop:
-    mov edx, [eax]
+    movzx edx, word [eax]
+;    lea edx, []
     imul edx, 3
 
     cmp edi, 0
@@ -108,7 +109,7 @@ inner_loop:
     jge inner_loop
 white_stripe:
     not edi
-    add eax, 4
+    add eax, 2
     add ebx, edx
     dec ecx
     cmp ecx, 0
