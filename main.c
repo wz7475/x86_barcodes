@@ -93,7 +93,7 @@ int main(void)
 {
     size_t bmp_size = 0;
     // 100x50 ok; 50x50 malloc exception
-    uint8_t *bmp_buffer = generate_empty_bitmap(120, 50, &bmp_size);
+    uint8_t *bmp_buffer = generate_empty_bitmap(121, 50, &bmp_size);
 
     uint16_t *stripes = (uint16_t *) malloc(18);
 //    uint16_t hardcoded_widths [9] = {4,4,2,2,1,1,4,4, 4};

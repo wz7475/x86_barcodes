@@ -11,7 +11,7 @@ replicate_row:
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 
-    imul ecx, 3
+    lea ecx, [ecx + ecx*2]
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
@@ -21,7 +21,9 @@ replicate_row:
     mov edi, ecx ; edi = line bytes
 width_loop:
     mov ecx, edi ; need to preserve base line bytes
-    imul ecx, 49 ; last pixel in column
+    lea ecx, [ecx + ecx*2]
+    shl ecx, 4
+    add ecx, edi ; ecx *= 49 (height - 1)
     mov  edx, [eax]
     and edx, 0x0000ffff
     cmp edx, 0x0000ffff
@@ -72,7 +74,7 @@ put_row:
     mov edi, 0
 paint_loop:
     movzx edx, word [eax]
-    imul edx, 3
+    lea edx, [edx + edx*2]
 
     cmp edi, 0
     jne white_stripe
