@@ -107,7 +107,7 @@ int main(void)
     }
 
     put_row(bmp_buffer, stripes, 9);
-//    replicate_row(bmp_buffer);
+    replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);
     return 0;

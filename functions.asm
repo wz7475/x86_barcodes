@@ -1,6 +1,6 @@
 section	.text
 
-global put_row
+global put_row, replicate_row
 
 replicate_row:
     push ebp
@@ -9,7 +9,7 @@ replicate_row:
     push edi
 
 ;    eax is set by caller
-;    mov eax, [ebp+8] ; address of bitmap (header + pixel)
+    mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 
     imul ecx, 3
@@ -57,7 +57,6 @@ put_row:
     push ebx
     push edi
     push esi
-;    TODO: is calling convention ok?
 
 ; integral promotion each argument is 4 bytes,
 ; array of unit_16t -> elements separated  by 4 bytes
@@ -114,10 +113,6 @@ white_stripe:
     dec ecx
     cmp ecx, 0
     jg paint_loop
-
-debug_label:
-    mov eax, [ebp+8]
-    call replicate_row
 
     pop esi
     pop edi
