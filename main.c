@@ -89,7 +89,7 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 
 
 extern int replicate_row(uint8_t *dest_bitmap);
-extern int put_row(uint8_t *dest_bitmap, uint16_t *stripes_widths, uint8_t hardcoded_len, uint8_t offset);
+
 
 int main(void)
 {
@@ -106,27 +106,28 @@ int main(void)
 //
 //    free(output_width);
 //    print_char_codes(0);
-    print_string_codes("013401", 6);
 
-//
-//    size_t bmp_size = 0;
-//    // 100x50 ok; 50x50 malloc exception
-//    uint8_t *bmp_buffer = generate_empty_bitmap(121, 50, &bmp_size);
-//
-//    uint16_t *stripes = (uint16_t *) malloc(18);
-////    uint16_t hardcoded_widths [9] = {4,4,2,2,1,1,4,4, 4};
-//    uint16_t hardcoded_widths [9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+
+    size_t bmp_size = 0;
+    // 100x50 ok; 50x50 malloc exception
+    uint8_t *bmp_buffer = generate_empty_bitmap(121, 50, &bmp_size);
+
+    uint16_t *stripes = (uint16_t *) malloc(18);
+//    uint16_t hardcoded_widths [9] = {4,4,2,2,1,1,4,4, 4};
+    uint16_t hardcoded_widths [9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (int i=0; i<9; i++){
+        stripes[i] = hardcoded_widths[i];
+    }
+
 //    for (int i=0; i<9; i++){
-//        stripes[i] = hardcoded_widths[i];
+//        printf("%d\n", stripes[i]);
 //    }
-//
-////    for (int i=0; i<9; i++){
-////        printf("%d\n", stripes[i]);
-////    }
-//
+    print_string_codes(bmp_buffer,"013401", 6);
+
 //    put_row(bmp_buffer, stripes, 9, 10);
-//    replicate_row(bmp_buffer);
-//    write_bytes_to_bmp(bmp_buffer, bmp_size);
-//    free(bmp_buffer);
+    replicate_row(bmp_buffer);
+    write_bytes_to_bmp(bmp_buffer, bmp_size);
+    free(bmp_buffer);
     return 0;
 }
