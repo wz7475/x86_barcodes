@@ -8,7 +8,6 @@ replicate_row:
     push ebx
     push edi
 
-;    eax is set by caller
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 
@@ -16,14 +15,10 @@ replicate_row:
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-;    mov ebx, [ebp +12] ; copy x
     xor ebx, ebx
-    imul ebx, 3 ; 3 bytes per pixel ebx - x
-
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
-;    mov eax, ecx ; eax = img_width (loop)
     mov eax, [eax+18]
     mov edi, ecx ; edi = line bytes
 width_loop:
@@ -58,21 +53,10 @@ put_row:
     push edi
     push esi
 
-; integral promotion each argument is 4 bytes,
-; array of unit_16t -> elements separated  by 4 bytes
-;    mov eax, [ebp+12]
-;    mov eax, [eax+12]
-
     mov eax, [ebp+8] ; address of bitmap (header + pixel)
     mov ecx, [eax+18] ; get img width
 
-    imul ecx, 3
-    add ecx, 3
-    and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
-
     xor ebx, ebx
-    imul ebx, 3 ; 3 bytes per pixel ebx - x
-
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
 
@@ -83,16 +67,13 @@ put_row:
 ;   edi - negation white/black
 ;   esi - current stripe width
 
-    mov eax, [ebp+12]
-
-    xor edi, edi
-    mov ecx, [ebp+16]
-;    mov ecx, 8
+    mov eax, [ebp+12] ; stripes' widths
+    xor edi, edi ; black /white
+    mov ecx, [ebp+16] ; amount of stripes
 
     mov edi, 0
 paint_loop:
     movzx edx, word [eax]
-;    lea edx, []
     imul edx, 3
 
     cmp edi, 0

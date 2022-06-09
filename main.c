@@ -102,9 +102,9 @@ int main(void)
         stripes[i] = hardcoded_widths[i];
     }
 
-    for (int i=0; i<9; i++){
-        printf("%d\n", stripes[i]);
-    }
+//    for (int i=0; i<9; i++){
+//        printf("%d\n", stripes[i]);
+//    }
 
     put_row(bmp_buffer, stripes, 9);
     replicate_row(bmp_buffer);
