@@ -87,7 +87,7 @@ unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, si
 
 
 extern int replicate_row(uint8_t *dest_bitmap);
-extern int put_row(uint8_t *dest_bitmap, uint16_t *stripes_widths, uint8_t hardcoded_len);
+extern int put_row(uint8_t *dest_bitmap, uint16_t *stripes_widths, uint8_t hardcoded_len, uint8_t offset);
 
 int main(void)
 {
@@ -106,7 +106,7 @@ int main(void)
 //        printf("%d\n", stripes[i]);
 //    }
 
-    put_row(bmp_buffer, stripes, 9);
+    put_row(bmp_buffer, stripes, 9, 10);
     replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
     free(bmp_buffer);

@@ -59,7 +59,10 @@ put_row:
     xor ebx, ebx
     add ebx, eax ; make address absolute (pos + img_ptr)
     add ebx, 54 ; add offset (header is always 54)
-
+    mov edi, [ebp+20]
+    lea edi, [edi + edi*2]
+    add ebx, edi ; add offset
+;    lea ebx, [ebx + edi*3]
 ;   eax - address of widths
 ;   ebx - address of first pixel
 ;   ecx - counter for stripes
