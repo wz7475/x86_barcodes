@@ -105,7 +105,8 @@ int main(void)
 //    }
 //
 //    free(output_width);
-    print_char_codes(0);
+//    print_char_codes(0);
+    print_string_codes();
 
 //
 //    size_t bmp_size = 0;

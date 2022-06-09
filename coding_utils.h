@@ -21,5 +21,14 @@ void print_char_codes(int index){
     free(output_width);
 }
 
+void print_string_codes(){
+    char code[4] = "1234";
+    for (int i = 0; i < 4 ; i++){
+        uint8_t code_value = (code[i] - 48) * 10 + code[i+1] - 48;
+        printf("%d ", code_value);
+        i++;
+    }
+}
+
 
 #endif //CODING_UTILS_H
