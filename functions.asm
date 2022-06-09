@@ -15,29 +15,27 @@ replicate_row:
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-    xor ebx, ebx
-    add ebx, eax ; make address absolute (pos + img_ptr)
-    add ebx, 54 ; add offset (header is always 54)
+    mov ebx, [eax+18]
+    add eax, 54 ; add offset (header is always 54)
 
-    mov eax, [eax+18]
     mov edi, ecx ; edi = line bytes
 width_loop:
     mov ecx, edi ; need to preserve base line bytes
     imul ecx, 49 ; last pixel in column
-    mov  edx, [ebx]
+    mov  edx, [eax]
     and edx, 0x0000ffff
     cmp edx, 0x0000ffff
     je white_pixel   ; pixels are black of white => it's sufficient to check just 2 out 3 bytes
 loop:
-    mov word [ebx + ecx], 0
-    mov byte [ebx + ecx + 2], 0
+    mov word [eax + ecx], 0
+    mov byte [eax + ecx + 2], 0
     sub ecx, edi ; 1px down
     cmp ecx, 0
     jg loop
 white_pixel:
-    add ebx, 3
-    dec eax
-    cmp eax, 0
+    add eax, 3
+    dec ebx
+    cmp ebx, 0
     jg width_loop
 
     pop edi
