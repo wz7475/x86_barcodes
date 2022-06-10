@@ -17,7 +17,7 @@ void code_char(int index, uint16_t *final_widths, uint8_t width_offset, uint8_t 
     }
 }
 
-void print_string_codes(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width) {
+void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width) {
     uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+18, 2);
 //    char code[code_len] = "0134";
     code_char(103, final_widths, 0, stripe_width); // start code

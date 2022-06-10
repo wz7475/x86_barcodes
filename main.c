@@ -7,15 +7,49 @@
 
 int main(void)
 {
+
+
+    char *input_code = NULL;
+    printf("please input a string to code (event amount of digits (0-9):\n");
+    scanf("%ms",&input_code); // m for measure string and allocate memory
+    if (input_code == NULL){
+        fprintf(stderr, "That string was too long - memory allocation fault\n");
+        exit(3);
+    }
+
+
+    uint8_t input_len = strlen(input_code);
+    if (input_len % 2 != 0){
+        fprintf(stderr, "Amount of digits has to be even");
+        exit(1);
+    }
+    for (int i = 0; i < input_len; i++){
+        if (input_code[i] < '0' || input_code[i] > '9'){
+            fprintf(stderr, "Each character has to be a digit");
+            exit(2);
+        }
+    }
+    printf("this is the string %s\n",input_code);
+
+    uint16_t stripe_width;
+    printf("enter base stripe's width (usually 1-3px)\n");
+    scanf("%hd", &stripe_width);
+    printf("%hd", stripe_width);
+
     size_t bmp_size = 0;
     uint8_t *bmp_buffer = generate_empty_bitmap(300, 50, &bmp_size);
 
 
-    print_string_codes(bmp_buffer,"015689", 6, 2);
+    encode_text(bmp_buffer, input_code, input_len, stripe_width);
 
     replicate_row(bmp_buffer);
     write_bytes_to_bmp(bmp_buffer, bmp_size);
 
     free(bmp_buffer);
+
+
+
+    free(input_code);
+
     return 0;
 }
