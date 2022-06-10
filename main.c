@@ -29,12 +29,10 @@ int main(void)
             exit(2);
         }
     }
-    printf("this is the string %s\n",input_code);
 
     uint16_t stripe_width;
     printf("enter base stripe's width (usually 1-3px)\n");
     scanf("%hd", &stripe_width);
-    printf("%hd", stripe_width);
 
     uint16_t img_width = calc_img_width(input_len, stripe_width);
 
