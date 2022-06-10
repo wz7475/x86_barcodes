@@ -62,7 +62,6 @@ put_row:
     mov edi, [ebp+20]
     lea edi, [edi + edi*2]
     add ebx, edi ; add offset
-;    lea ebx, [ebx + edi*3]
 ;   eax - address of widths
 ;   ebx - address of first pixel
 ;   ecx - counter for stripes
