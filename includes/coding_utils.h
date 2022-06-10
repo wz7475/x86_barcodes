@@ -16,10 +16,10 @@ void code_char(int index, uint16_t *final_widths, uint8_t width_offset){
 }
 
 void print_string_codes(uint8_t *dest_bitmap, char *code, uint8_t code_len){
-    uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6, 2);
+    uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+6, 2);
 //    char code[code_len] = "0134";
-//    code_char(100, final_widths, 0); // start code
-    uint8_t loop_counter = 0; // 6 stripes were used for start code
+    code_char(100, final_widths, 0); // start code
+    uint8_t loop_counter = 1; // 6 stripes were used for start code
     for (int i = 0; i < code_len ; i++){
         uint8_t code_value = (code[i] - 48) * 10 + code[i+1] - 48;
         code_char(code_value, final_widths, loop_counter * 6);
@@ -33,7 +33,7 @@ void print_string_codes(uint8_t *dest_bitmap, char *code, uint8_t code_len){
         }
         printf("%d ", final_widths[i]);
     }
-    put_row(dest_bitmap, final_widths, (code_len / 2) * 6, 10);
+    put_row(dest_bitmap, final_widths, (code_len / 2) * 6+6, 10);
     free(final_widths);
 }
 
