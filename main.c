@@ -43,7 +43,7 @@ int main(void)
 //    for (int i=0; i<9; i++){
 //        printf("%d\n", stripes[i]);
 //    }
-    print_string_codes(bmp_buffer,"0001", 4, 1);
+    print_string_codes(bmp_buffer,"123456", 6, 1);
 
 //    put_row(bmp_buffer, stripes, 9, 10);
     replicate_row(bmp_buffer);
