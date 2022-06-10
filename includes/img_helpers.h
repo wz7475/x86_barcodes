@@ -8,7 +8,7 @@
 #include <stdint.h>
 #pragma pack(1)
 
-#define OUT_FILE_NAME "output.bmp"
+#define OUT_FILE_NAME "code128.bmp"
 
 
 #define BMP_HEADER_SIZE 54
