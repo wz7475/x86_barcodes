@@ -1,7 +1,7 @@
 #ifndef CODES_TABLE_H
 #define CODES_TABLE_H
 #include <stdint.h>
-uint32_t widths [101] = {
+uint32_t widths [104] = {
         212222,
         222122,
         222221,
@@ -102,6 +102,9 @@ uint32_t widths [101] = {
         411113,
         411311,
         113141,
+        114131,
+        311141,
+        411131,
         211232 // start code
 };
 
