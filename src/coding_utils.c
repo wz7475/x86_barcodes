@@ -32,17 +32,18 @@ void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8
     }
 //    printf("%d\n", checksum);
     checksum %= 103;
-    printf("%d\t", checksum);
-    printf("%d\n", widths[checksum]);
-//    debug section
+
     code_char(checksum, final_widths, loop_counter *6, stripe_width);
     code_char(104, final_widths, loop_counter *6+6, stripe_width); // stop code
-    for (int i = 0; i <( code_len / 2) * 6+6+6+6; i++){
-        if (i % 6 == 0 && i >0){
-            printf("\n");
-        }
-        printf("%d ", final_widths[i]);
-    }
+//    debug section
+//    printf("%d\t", checksum);
+//    printf("%d\n", widths[checksum]);
+//    for (int i = 0; i <( code_len / 2) * 6+6+6+6; i++){
+//        if (i % 6 == 0 && i >0){
+//            printf("\n");
+//        }
+//        printf("%d ", final_widths[i]);
+//    }
     put_row(dest_bitmap, final_widths, (code_len / 2) * 6+18, stripe_width * 10);
     free(final_widths);
 }

@@ -46,8 +46,7 @@ void write_bytes_to_bmp(uint8_t *buffer, size_t size);
 
 unsigned char *generate_empty_bitmap(unsigned int width, size_t *output_size);
 
-void cal_img_width_and_margin(uint16_t text_len, uint16_t stripe_width, uint16_t *img_width, uint16_t *margin);
-
+uint16_t calc_img_width(uint16_t text_len, uint16_t stripe_width);
 
 extern int replicate_row(uint8_t *dest_bitmap);
 extern int put_row(uint8_t *dest_bitmap, uint16_t *stripes_widths, uint8_t hardcoded_len, uint8_t offset);

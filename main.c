@@ -36,8 +36,10 @@ int main(void)
     scanf("%hd", &stripe_width);
     printf("%hd", stripe_width);
 
+    uint16_t img_width = calc_img_width(input_len, stripe_width);
+
     size_t bmp_size = 0;
-    uint8_t *bmp_buffer = generate_empty_bitmap(300, &bmp_size);
+    uint8_t *bmp_buffer = generate_empty_bitmap(img_width, &bmp_size);
 
 
     encode_text(bmp_buffer, input_code, input_len, stripe_width);
