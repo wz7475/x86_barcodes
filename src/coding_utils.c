@@ -43,6 +43,6 @@ void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8
         }
         printf("%d ", final_widths[i]);
     }
-    put_row(dest_bitmap, final_widths, (code_len / 2) * 6+18, 30);
+    put_row(dest_bitmap, final_widths, (code_len / 2) * 6+18, stripe_width * 10);
     free(final_widths);
 }

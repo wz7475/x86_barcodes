@@ -19,16 +19,16 @@ void write_bytes_to_bmp(uint8_t *buffer, size_t size) {
     fclose(file);
 }
 
-unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, size_t *output_size) {
+unsigned char *generate_empty_bitmap(unsigned int width, size_t *output_size) {
     unsigned int row_size = (width  * 3 + 3) & ~3; // round up to dividable by 4
-    *output_size = row_size * height + BMP_HEADER_SIZE;
+    *output_size = row_size * 50 + BMP_HEADER_SIZE;
     uint8_t *bitmap = (uint8_t *) malloc(*output_size);
 
     BmpHeader header;
     init_bmp_header(&header);
     header.size = *output_size;
     header.width = width;
-    header.height = height;
+    header.height = 50;
 
     memcpy(bitmap, &header, BMP_HEADER_SIZE); // copy header to newly allocated memory
     for (int i = BMP_HEADER_SIZE; i < *output_size; ++i){ // paint white
@@ -50,4 +50,9 @@ void init_bmp_header(BmpHeader *header) {
     header->horizontal_res= BMP_HORIZONTAL_RES;
     header->vertical_res = BMP_VERTICAL_RES;
     header->important_colors = 0;
+}
+
+void cal_img_width_and_margin(uint16_t text_len, uint16_t stripe_width, uint16_t *img_width, uint16_t *margin) {
+    *margin = stripe_width * 2 * 10;
+
 }

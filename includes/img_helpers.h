@@ -44,7 +44,9 @@ void init_bmp_header(BmpHeader *header);
 
 void write_bytes_to_bmp(uint8_t *buffer, size_t size);
 
-unsigned char *generate_empty_bitmap(unsigned int width, unsigned int height, size_t *output_size);
+unsigned char *generate_empty_bitmap(unsigned int width, size_t *output_size);
+
+void cal_img_width_and_margin(uint16_t text_len, uint16_t stripe_width, uint16_t *img_width, uint16_t *margin);
 
 
 extern int replicate_row(uint8_t *dest_bitmap);

@@ -37,7 +37,7 @@ int main(void)
     printf("%hd", stripe_width);
 
     size_t bmp_size = 0;
-    uint8_t *bmp_buffer = generate_empty_bitmap(300, 50, &bmp_size);
+    uint8_t *bmp_buffer = generate_empty_bitmap(300, &bmp_size);
 
 
     encode_text(bmp_buffer, input_code, input_len, stripe_width);
