@@ -7,22 +7,22 @@
 #include "codes_table.h"
 #include "img_helpers.h"
 
-void code_char(int index, uint16_t *final_widths, uint8_t width_offset){
+void code_char(int index, uint16_t *final_widths, uint8_t width_offset, uint8_t stripe_width){
     uint32_t width_copy = widths[index];
     for (int i =0; i < 6; i++){
-        final_widths[width_offset + i] = width_copy % 10;
+        final_widths[width_offset + i] = (width_copy % 10) * stripe_width;
         width_copy /= 10;
     }
 }
 
-void print_string_codes(uint8_t *dest_bitmap, char *code, uint8_t code_len){
+void print_string_codes(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width){
     uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+6, 2);
 //    char code[code_len] = "0134";
-    code_char(100, final_widths, 0); // start code
+    code_char(100, final_widths, 0, stripe_width); // start code
     uint8_t loop_counter = 1; // 6 stripes were used for start code
     for (int i = 0; i < code_len ; i++){
         uint8_t code_value = (code[i] - 48) * 10 + code[i+1] - 48;
-        code_char(code_value, final_widths, loop_counter * 6);
+        code_char(code_value, final_widths, loop_counter * 6, stripe_width);
         i++;
         loop_counter++;
     }
