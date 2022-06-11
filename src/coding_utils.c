@@ -25,7 +25,7 @@ void code_stop_char(uint16_t *final_widths, uint8_t width_offset, uint8_t stripe
     }
 }
 
-void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width) {
+void generate_barcode(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width) {
     uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+19, 2);
 //    char code[code_len] = "0134";
     code_char(103, final_widths, 0, stripe_width); // start code
@@ -56,4 +56,5 @@ void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8
 //    printf("%d\n", final_widths[( code_len / 2) * 6+6+6+6]);
     put_row(dest_bitmap, final_widths, (code_len / 2) * 6+19, stripe_width * 20);
     free(final_widths);
+    replicate_row(dest_bitmap);
 }

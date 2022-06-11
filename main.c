@@ -40,10 +40,10 @@ int main(void)
     uint8_t *bmp_buffer = generate_empty_bitmap(img_width, &bmp_size);
 
 
-    encode_text(bmp_buffer, input_code, input_len, stripe_width);
+    generate_barcode(bmp_buffer, input_code, input_len, stripe_width);
 
-    replicate_row(bmp_buffer);
-    write_bytes_to_bmp(bmp_buffer, bmp_size);
+
+    write_bytes_to_bmp(bmp_buffer, (size_t) bmp_size);
 
     free(bmp_buffer);
 
