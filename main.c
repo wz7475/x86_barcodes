@@ -43,7 +43,7 @@ int main(void)
     generate_barcode(bmp_buffer, input_code, input_len, stripe_width);
 
 
-    write_bytes_to_bmp(bmp_buffer, (size_t) bmp_size);
+    write_bytes_to_bmp(bmp_buffer, bmp_size);
 
     free(bmp_buffer);
 
