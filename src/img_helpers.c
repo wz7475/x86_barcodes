@@ -53,5 +53,5 @@ void init_bmp_header(BmpHeader *header) {
 }
 
 uint16_t calc_img_width(uint16_t text_len, uint16_t stripe_width){
-    return (text_len / 2 + 3) * 11 * stripe_width + 20 * stripe_width;
+    return (text_len / 2 + 3) * 11 * stripe_width + 40 * stripe_width;
 }

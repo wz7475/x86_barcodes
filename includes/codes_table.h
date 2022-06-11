@@ -1,7 +1,7 @@
 #ifndef CODES_TABLE_H
 #define CODES_TABLE_H
 #include <stdint.h>
-uint32_t widths [105] = {
+uint32_t widths [106] = {
         212222,
         222122,
         222221,
@@ -106,7 +106,8 @@ uint32_t widths [105] = {
         311141,
         411131,
         211232, // start code
-        233111 // stop code
+        233111, // stop code
+        2331112 // stop code 7 stripes
 };
 
 #endif //CODES_TABLE_H

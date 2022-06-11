@@ -17,8 +17,16 @@ void code_char(int index, uint16_t *final_widths, uint8_t width_offset, uint8_t 
     }
 }
 
+void code_stop_char(uint16_t *final_widths, uint8_t width_offset, uint8_t stripe_width){
+    uint32_t width_copy = widths[105];
+    for (int i =6; i >= 0; i--){
+        final_widths[width_offset + i] = (width_copy % 10) * stripe_width;
+        width_copy /= 10;
+    }
+}
+
 void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8_t stripe_width) {
-    uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+18, 2);
+    uint16_t *final_widths = (uint16_t *) calloc((code_len / 2) * 6+19, 2);
 //    char code[code_len] = "0134";
     code_char(103, final_widths, 0, stripe_width); // start code
     uint8_t loop_counter = 1; // 6 stripes were used for start code
@@ -34,7 +42,8 @@ void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8
     checksum %= 103;
 
     code_char(checksum, final_widths, loop_counter *6, stripe_width);
-    code_char(104, final_widths, loop_counter *6+6, stripe_width); // stop code
+//    code_char(104, final_widths, loop_counter *6+6, stripe_width); // stop code
+    code_stop_char(final_widths, loop_counter *6+6, stripe_width);
 //    debug section
 //    printf("%d\t", checksum);
 //    printf("%d\n", widths[checksum]);
@@ -44,6 +53,7 @@ void encode_text(uint8_t *dest_bitmap, const char *code, uint8_t code_len, uint8
 //        }
 //        printf("%d ", final_widths[i]);
 //    }
-    put_row(dest_bitmap, final_widths, (code_len / 2) * 6+18, stripe_width * 10);
+//    printf("%d\n", final_widths[( code_len / 2) * 6+6+6+6]);
+    put_row(dest_bitmap, final_widths, (code_len / 2) * 6+19, stripe_width * 20);
     free(final_widths);
 }
