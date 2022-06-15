@@ -59,17 +59,20 @@ put_row:
 ;
 ;    xor ebx, ebx
 ;    add ebx, eax ; make address absolute (pos + img_ptr)
-    mov rbx, rdi
+;    mov rbx, rdi
 ;    add ebx, 54 ; add offset (header is always 54)
-    add rbx, 54
+    add rdi, 54
 ;    mov edi, [ebp+20]
 ;    lea edi, [edi + edi*2]
     lea rcx, [rcx + rcx*2]
 
 ;    add ebx, edi ; add offset
-    add rbx, rcx ; add offset
-    mov word [rbx], 0
-    mov byte [rbx +2], 0
+    add rdi, rcx ; add offset
+
+;    DEBUG add paint first pixel
+;    mov word [rdi], 0
+;    mov byte [rdi +2], 0
+
 ;;   eax - address of widths
 ;;   ebx - address of first pixel
 ;;   ecx - counter for stripes
@@ -79,31 +82,45 @@ put_row:
 ;
 ;    mov eax, [ebp+12] ; stripes' widths
 ;    xor edi, edi ; black /white
+    xor r10, r10
 ;    mov ecx, [ebp+16] ; amount of stripes
 ;
 ;    mov edi, 0
-;paint_loop:
+paint_loop:
 ;    movzx edx, word [eax]
+    mov r11, rsi
 ;    lea edx, [edx + edx*2]
+    lea r11, [r11 + r11*2]
 ;
 ;    cmp edi, 0
-;    jne white_stripe
+    cmp r10, 0
+    jne white_stripe
 ;
 ;    mov esi, edx
+    mov r12, r11
 ;    sub esi, 3
-;inner_loop:
+    sub r12, 3
+inner_loop:
 ;    mov word [ebx+esi], 0
+    mov word [rdi], 0
 ;    mov byte [ebx+esi+2], 0
+;    mov [rdi+r12+2], 0
 ;    sub esi, 3
+    sub r12, 3
 ;    cmp esi, 0
-;    jge inner_loop
-;white_stripe:
+    cmp r12, 0
+    jge inner_loop
+white_stripe:
 ;    not edi
+    not r10
 ;    add eax, 2
+    add rdi, 2
 ;    add ebx, edx
+    add rdi, r11
 ;    dec ecx
-;    cmp ecx, 0
-;    jg paint_loop
+    dec rdx
+    cmp rdx, 0
+    jg paint_loop
 
     pop rsi
     pop rdi
