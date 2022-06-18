@@ -66,8 +66,8 @@ put_row:
 ;   rsi / eax - stripes widths
 ;   r11 / edi - black/white
 ;   rdx / ecx  - counter for stripes
-;   r12 / edx - read stripe from table
-;   r13 / esi - current stipe width
+;   r8 / edx - read stripe from table
+;   r9 / esi - current stipe width
     mov r10, [rsi]
     xor r11, r11
 ;0x0006 0003 0003 0006
@@ -76,24 +76,24 @@ paint_loop:
 
 ;    DEBUG add paint first pixel
 ;    imul r10, 90
-    movzx r12, word [rsi] ; read stripe from table
-    lea r12, [r12 + r12*2] ; multiply width  by 3
+    movzx r8, word [rsi] ; read stripe from table
+    lea r8, [r8 + r8*2] ; multiply width  by 3
 
     cmp r11, 0
     jne white_stripe
 
-    mov r13, r12
-    sub r13, 3
+    mov r9, r8
+    sub r9, 3
 inner_loop:
-    mov word [rdi+r13], 0
-    mov byte [rdi +r13+2], 0
-    sub r13, 3
+    mov word [rdi+r9], 0
+    mov byte [rdi +r9+2], 0
+    sub r9, 3
     jge inner_loop
 
 white_stripe:
     not r11
     add rsi, 2
-    add rdi, r12
+    add rdi, r8
     dec rdx
     jg paint_loop
 
