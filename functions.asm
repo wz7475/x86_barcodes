@@ -69,7 +69,6 @@ put_row:
     xor edi, edi ; black /white
     mov ecx, [ebp+16] ; amount of stripes
 
-    mov edi, 0
 paint_loop:
     movzx edx, word [eax]
     lea edx, [edx + edx*2]
