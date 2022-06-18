@@ -15,7 +15,10 @@ replicate_row:
     add ecx, 3
     and ecx, 0xFFFFFFFC ; ecx = line_bytes = (width * 3 + 3)~ -3
 
-    mov ebx, [eax+18]
+    mov ebx, ecx
+    shr ebx, 2 ; divide by word -> get amount of words per width
+
+;    mov ebx, [eax+18]
     add eax, 54 ; add offset (header is always 54)
 
     mov edi, ecx ; edi = line bytes
@@ -24,17 +27,13 @@ width_loop:
     lea ecx, [ecx + ecx*2]
     shl ecx, 4
     add ecx, edi ; ecx *= 49 (height - 1)
-    mov  edx, [eax]
-    and edx, 0x0000ffff
-    cmp edx, 0x0000ffff
-    je white_pixel   ; pixels are black of white => it's sufficient to check just 2 out 3 bytes
 loop:
-    mov word [eax + ecx], 0
-    mov byte [eax + ecx + 2], 0
+    mov edx, [eax]
+    mov [eax+ecx], edx
     sub ecx, edi ; 1px down
     jg loop
-white_pixel:
-    add eax, 3
+
+    add eax, 4
     dec ebx
     jg width_loop
 
