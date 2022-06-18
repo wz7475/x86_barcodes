@@ -33,7 +33,7 @@ int main(void)
 
 
     uint16_t stripe_width;
-    stripe_width = 3;
+    stripe_width = 1;
 //    printf("enter base stripe's width (usually 1-3px)\n");
 //    scanf("%hd", &stripe_width);
 
