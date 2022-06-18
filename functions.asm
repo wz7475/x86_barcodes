@@ -19,11 +19,11 @@ replicate_row:
 
     mov r9, r11
 
-;   rdi / eax - address of fist pixel
-;   r10 / ebx - words per width
-;   r11 / ecx - line bytes / address of word in top row
-;   r8 / edx - content of replicated row
-;   r9  / edi - line bytes copy
+;   rdi - address of fist pixel
+;   r10 - words per width
+;   r11 - line bytes / address of word in top row
+;   r8 - content of replicated row
+;   r9  - line bytes copy
 
 
     add rdi, 54
@@ -58,12 +58,12 @@ put_row:
 
 
 
-;   rdi / ebx - first pixel
-;   rsi / eax - stripes widths
-;   r11 / edi - black/white
-;   rdx / ecx  - counter for stripes
-;   r8 / edx - read stripe from table
-;   r9 / esi - current stipe width
+;   rdi - first pixel
+;   rsi - stripes widths
+;   r11 - black/white
+;   rdx  - counter for stripes
+;   r8 - read stripe from table
+;   r9 - current stipe width
     mov r10, [rsi]
     xor r11, r11
 ;0x0006 0003 0003 0006
