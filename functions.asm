@@ -9,7 +9,7 @@ replicate_row:
     movzx r10, word [rdi+18]
     lea r10, [r10+r10*2]
     add r10, 3
-    and r10, 0xFFFFFFFFFFFFFFFFC
+    and r10, 0xFFFFFFFFFFFFFFFC
 
     mov r11, r10
     shr r10, 3
