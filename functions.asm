@@ -54,72 +54,47 @@ put_row:
     push rdi
     push rsi
 
-;    mov eax, [ebp+8] ; address of bitmap (header + pixel)
-;    mov ecx, [eax+18] ; get img width
-;
-;    xor ebx, ebx
-;    add ebx, eax ; make address absolute (pos + img_ptr)
-;    mov rbx, rdi
-;    add ebx, 54 ; add offset (header is always 54)
+
     add rdi, 54
-;    mov edi, [ebp+20]
-;    lea edi, [edi + edi*2]
     lea rcx, [rcx + rcx*2]
 
-;    add ebx, edi ; add offset
     add rdi, rcx ; add offset
 
-;    DEBUG add paint first pixel
-;    mov word [rdi], 0
-;    mov byte [rdi +2], 0
 
-;;   eax - address of widths
-;;   ebx - address of first pixel
-;;   ecx - counter for stripes
-;;   edx - offset to stripe
-;;   edi - negation white/black
-;;   esi - current stripe width
-;
-;    mov eax, [ebp+12] ; stripes' widths
-;    xor edi, edi ; black /white
-    xor r10, r10
-;    mov ecx, [ebp+16] ; amount of stripes
-;
-;    mov edi, 0
+
+;   rdi / ebx - first pixel
+;   rsi / eax - stripes widths
+;   r11 / edi - black/white
+;   rdx / ecx  - counter for stripes
+;   r12 / edx - read stripe from table
+;   r13 / esi - current stipe width
+    mov r10, [rsi]
+    xor r11, r11
+;0x0006 0003 0003 0006
+
 paint_loop:
-;    movzx edx, word [eax]
-    mov r11, rsi
-;    lea edx, [edx + edx*2]
-    lea r11, [r11 + r11*2]
-;
-;    cmp edi, 0
-    cmp r10, 0
+
+;    DEBUG add paint first pixel
+;    imul r10, 90
+    movzx r12, word [rsi] ; read stripe from table
+    lea r12, [r12 + r12*2] ; multiply width  by 3
+
+    cmp r11, 0
     jne white_stripe
-;
-;    mov esi, edx
-    mov r12, r11
-;    sub esi, 3
-    sub r12, 3
+
+    mov r13, r12
+    sub r13, 3
 inner_loop:
-;    mov word [ebx+esi], 0
-    mov word [rdi], 0
-;    mov byte [ebx+esi+2], 0
-;    mov [rdi+r12+2], 0
-;    sub esi, 3
-    sub r12, 3
-;    cmp esi, 0
-    cmp r12, 0
+    mov word [rdi+r13], 0
+    mov byte [rdi +r13+2], 0
+    sub r13, 3
     jge inner_loop
+
 white_stripe:
-;    not edi
-    not r10
-;    add eax, 2
-    add rdi, 2
-;    add ebx, edx
-    add rdi, r11
-;    dec ecx
+    not r11
+    add rsi, 2
+    add rdi, r12
     dec rdx
-    cmp rdx, 0
     jg paint_loop
 
     pop rsi

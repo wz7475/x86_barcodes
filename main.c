@@ -10,7 +10,7 @@ int main(void)
 
 
 //    char *input_code = NULL;
-    char *input_code = "1234";
+    char *input_code = "11";
 //    printf("please input a string to code (event amount of digits (0-9):\n");
 //    scanf("%ms",&input_code); // m for measure string and allocate memory
 //    if (input_code == NULL){
