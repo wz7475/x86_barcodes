@@ -56,5 +56,5 @@ void generate_barcode(uint8_t *dest_bitmap, const char *code, uint8_t code_len, 
 //    printf("%d\n", final_widths[( code_len / 2) * 6+6+6+6]);
     put_row(dest_bitmap, final_widths, (code_len / 2) * 6+19, stripe_width * 20);
     free(final_widths);
-//    replicate_row(dest_bitmap);
+    replicate_row(dest_bitmap);
 }
