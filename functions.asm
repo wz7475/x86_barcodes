@@ -50,10 +50,6 @@ global put_row
 put_row:
     push rbp
     mov rbp, rsp
-    push rbx
-    push rdi
-    push rsi
-
 
     add rdi, 54
     lea rcx, [rcx + rcx*2]
@@ -97,8 +93,5 @@ white_stripe:
     dec rdx
     jg paint_loop
 
-    pop rsi
-    pop rdi
-    pop rbx
     pop rbp
     ret
