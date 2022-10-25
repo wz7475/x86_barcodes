@@ -1,7 +1,10 @@
-# Code182 ean8 set C
+# barcodes generator Code182 ean8 set C
 
-**stripes are aligned in the middle and image width is adjusted to encoded text's length**
+## Objective
+Given a barcode gernerate image with it
 
+## Tech
+Hybrid programming - x86 nasm assembly and c 
 
 if input text is in wrong format:
   * other characters than digits
